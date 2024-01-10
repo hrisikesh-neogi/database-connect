@@ -46,7 +46,7 @@ class MongoIO:
         Returns:
             database: database object of mongodb
         """
-        if mongo_operation.__database == None:
+        if MongoIO.__database == None:
             self.database = self.__create_mongo_client[self.database_name]
         return self.database
     
@@ -59,7 +59,7 @@ class MongoIO:
             database : pass the new database name that is going to be used for the next operations.
         """
         self.database = self.__create_mongo_client[database]
-        mongo_operation.__database = database
+        MongoIO.__database = database
         self.database_name = database
 
 
@@ -70,7 +70,7 @@ class MongoIO:
         Returns:
             collection : collection instance of mongodb
         """
-        if mongo_operation.__collection == None:
+        if MongoIO.__collection == None:
             self.collection = self.__connect_database[self.collection_name]
         
         return self.collection
@@ -84,7 +84,7 @@ class MongoIO:
             collection_name (str): pass new collection name that is going to be used for the next operations.
         """
         self.collection = self.__connect_database[collection_name]
-        mongo_operation.__collection = collection_name
+        MongoIO.__collection = collection_name
         self.collection_name = collection_name
        
             
@@ -118,7 +118,9 @@ class MongoIO:
                             )
         """
 
-        self.set_new_collection(collection_name =  collection_name)
+        if collection_name:
+           self.set_new_collection = collection_name
+           
         if type(record) == list:
             for data in record:
                 if type(data) != dict:
