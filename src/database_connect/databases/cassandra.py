@@ -18,27 +18,27 @@ class CassandraIO:
         self.client_secret = client_secret
         self.keyspace = keyspace
         self.table = table_name
-        if cassandra_operations.global_session != None:
+        if CassandraIO.global_session != None:
             self.__delete_sessions
         
 
     @property
     def session(self): 
 
-        if cassandra_operations.global_session is None:
+        if CassandraIO.global_session is None:
             cloud_config = {
                 'secure_connect_bundle': str(self.zip)
             }
             auth_provider = PlainTextAuthProvider(str(self.client_id),
                                                 str(self.client_secret))
             cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-            cassandra_operations.global_session= cluster.connect(str(self.keyspace))
-        return cassandra_operations.global_session
+            CassandraIO.global_session= cluster.connect(str(self.keyspace))
+        return CassandraIO.global_session
 
     
     @session.deleter
     def __delete_sessions(self):
-        del cassandra_operations.global_session
+        del CassandraIO.global_session
 
       
     def __get_keyspace_names(self): 
