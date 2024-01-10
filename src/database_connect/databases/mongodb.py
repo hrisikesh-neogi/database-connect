@@ -92,7 +92,7 @@ class MongoIO:
 
 
     @ensure_annotations
-    def insert_record(self, record: dict, collection_name:str) -> Any: 
+    def insert_record(self, record: dict, collection_name:str=None) -> Any: 
         """
         insert one record to mongodb
 
@@ -192,7 +192,8 @@ class MongoIO:
 
 
     @ensure_annotations
-    def update(self, where_condition:dict,update_query:dict, update_all_data = False):
+    def update(self, where_condition:dict,update_query:dict, update_all_data = False,
+               collection_name:str = None):
         """
         To update data in mongo database
         
@@ -212,6 +213,8 @@ class MongoIO:
 
         """
 
+        if collection_name:
+           self.set_new_collection = collection_name
 
 
         if update_all_data:
@@ -221,7 +224,8 @@ class MongoIO:
         
 
     @ensure_annotations
-    def delete_record(self, where_condition:dict, delete_all=False):
+    def delete_record(self, where_condition:dict, delete_all=False,
+                      collection_name:str =None):
         """_summary_
 
         Args:
@@ -235,6 +239,9 @@ class MongoIO:
                             If multiple records are to be deleted, value would be True. 
                             Default- False.
         """
+        if collection_name:
+           self.set_new_collection = collection_name
+           
         if delete_all:
             self.__connect_collection.delete_many(where_condition)
         else:
