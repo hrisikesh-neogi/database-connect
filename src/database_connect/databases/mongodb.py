@@ -92,7 +92,7 @@ class MongoIO:
 
 
     @ensure_annotations
-    def insert_record(self, record: dict, collection_name:str=None) -> Any: 
+    def insert_record(self, record: dict, collection_name:str=None): 
         """
         insert one record to mongodb
 
